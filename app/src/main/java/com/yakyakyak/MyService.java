@@ -20,7 +20,7 @@ import java.util.TimerTask;
 
 import static com.yakyakyak.NotificationManage.CHANNEL_1_ID;
 import static com.yakyakyak.NotificationManage.kontrol;
-import static com.yakyakyak.NotificationManage.period;
+
 
 
 public class MyService extends Service {
@@ -34,7 +34,7 @@ public class MyService extends Service {
     String[] listItemD,gunlerD,hatlar;
     long[] periods = new long[50];
     DataBase dataBase;
-
+    public static long period=1000;
     List<String> list;
     int gun, sure, k=0;
     public MyService() {
@@ -50,84 +50,7 @@ public class MyService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        Calendar cl = Calendar.getInstance();
-        gun = cl.get(Calendar.DAY_OF_WEEK);
-        switch (gun){
-            case Calendar.SUNDAY:
-                bugun = getString(R.string.pazar);
-                break;
-            case Calendar.MONDAY:
-                bugun = getString(R.string.pzt);
-                break;
-            case Calendar.TUESDAY:
-                bugun = getString(R.string.sali);
-                break;
-            case Calendar.WEDNESDAY:
-                bugun = getString(R.string.crs);
-                break;
-            case Calendar.THURSDAY:
-                bugun = getString(R.string.prs);
-                break;
-            case Calendar.FRIDAY:
-                bugun = getString(R.string.cuma);
-                break;
-            case Calendar.SATURDAY:
-                bugun = getString(R.string.cts);
-                break;
-        }
 
-        dataBase = new DataBase(MyService.this);
-        list = dataBase.VeriListele();
-        if(list.size() != 0) {
-            for (int i = 0; i < list.size(); i++) {
-                listItemD = list.get(i).split(" - ");
-                gunler = listItemD[1];
-                gunlerD = gunler.split(", ");
-                sure = Integer.parseInt(listItemD[2]);
-                zamanBirimi = listItemD[3];
-                saat = listItemD[4];
-                for (int j = 0; j < gunlerD.length; j++) {
-                    while (k == i) {
-                        if (bugun.equals(gunlerD[j])) {
-                            hat += listItemD[0] + ",";
-                            k++;
-                        }
-                    }
-                }
-                switch (zamanBirimi) {
-                    case "Saniye":
-                        period = 1000;
-                        period *= sure;
-                        break;
-                    case "Dakika":
-                        period = 1000;
-                        period *= 60 * sure;
-                        break;
-                    case "Saat":
-                        period = 1000;
-                        period *= 60 * 60 * sure;
-                        break;
-                    case "Gün":
-                        period = 1000;
-                        period *= 60 * 60 * 24 * sure;
-                        break;
-                    case "Ay":
-                        period = 1000;
-                        period *= 60 * 60 * 24 * 30 * sure;
-                        break;
-                    case "Yıl":
-                        period = 1000;
-                        period *= 60 * 60 * 24 * 365 * sure;
-                        break;
-                }
-                periods[i] = period;
-            }
-            if (!hat.equals("")) {
-                hat = hat.substring(0, hat.length() - 1);
-                hatlar = hat.split(",");
-            }
-        }
-        period=periods[0];
         Toast.makeText(this,"Service Oluştu",Toast.LENGTH_SHORT).show();
     }
 
@@ -150,19 +73,7 @@ public class MyService extends Service {
 
     }
 
-    public void sendNotification() {
-        NotificationCompat.Builder notification = new NotificationCompat.Builder(this,CHANNEL_1_ID);
-        notification.setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle(baslik)
-                .setContentText(yazi)
-                .setColor(getColor(R.color.colorPrimary))
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.ic_smoking))
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE);
-        notification.setDefaults(Notification.DEFAULT_LIGHTS|Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE|Notification.FLAG_AUTO_CANCEL);
-        notificationManager.notify(1,notification.build());
 
-    }
 
     @Override
     public void onDestroy() {

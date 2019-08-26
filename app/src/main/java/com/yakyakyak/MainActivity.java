@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ServiceConfigurationError;
 
-import static com.yakyakyak.NotificationManage.period;
+
 import static com.yakyakyak.NotificationManage.CHANNEL_1_ID;
 
 public class MainActivity extends AppCompatActivity {
@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
             DataBase dataBase = new DataBase(MainActivity.this);
             dataBase.VeriSil(ad);
             listele();
-            period = 0;
         }
         else{
             Toast.makeText(this,"Lütfen silmek istediğiniz hatırlatıcıya tıklayın",Toast.LENGTH_SHORT).show();
