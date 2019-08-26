@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Yak Yak Yak</string>
+    <string name="hatlistesi">Hatırlatılacaklar Listesi</string>
+    <string name="button">Kaydet</string>
+    <string name="hergun">Her Gün</string>
+    <string name="pzt">Pazartesi</string>
+    <string name="sali">Salı</string>
+    <string name="crs">Çarşamba</string>
+    <string name="prs">Perşembe</string>
+    <string name="cuma">Cuma</string>
+    <string name="cts">Cumartesi</string>
+    <string name="pazar">Pazar</string>
+    <string name="hint">Hatırlamak istediğiniz şeyi yazınız …</string>
+    <string-array name="spin">
+        <item>Saniye</item>
+        <item>Dakika</item>
+        <item>Saat</item>
+        <item>Gün</item>
+        <item>Ay</item>
+        <item>Yıl</item>
+    </string-array>
+    <string name="hintN">1,10,15,30,60,90 …</string>
+</resources>

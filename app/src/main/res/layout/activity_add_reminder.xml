@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cLayout_2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddReminder">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="addNewDuty"
+        android:text="@string/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:autofillHints=""
+        android:backgroundTint="#009688"
+        android:ems="15"
+        android:hint="@string/hint"
+        android:inputType="textPersonName"
+        android:textColorHighlight="@color/colorPrimary"
+        android:textColorLink="@color/colorPrimary"
+        android:textCursorDrawable="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="o" />
+
+    <CheckBox
+        android:id="@+id/cb_hergun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:checked="false"
+        android:clickable="false"
+        android:onClick="HcheckBoxCtl"
+        android:text="@string/hergun"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText" />
+
+    <CheckBox
+        android:id="@+id/cb_pzt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:onClick="checkBoxCtl"
+        android:text="@string/pzt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cb_hergun" />
+
+    <CheckBox
+        android:id="@+id/cb_sali"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:onClick="checkBoxCtl"
+        android:text="@string/sali"
+        app:layout_constraintStart_toEndOf="@+id/cb_pzt"
+        app:layout_constraintTop_toBottomOf="@+id/cb_hergun" />
+
+    <CheckBox
+        android:id="@+id/cb_crs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="checkBoxCtl"
+        android:text="@string/crs"
+        app:layout_constraintEnd_toStartOf="@+id/cb_prs"
+        app:layout_constraintStart_toEndOf="@+id/cb_sali"
+        app:layout_constraintTop_toBottomOf="@+id/cb_hergun" />
+
+    <CheckBox
+        android:id="@+id/cb_prs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:onClick="checkBoxCtl"
+        android:text="@string/prs"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cb_hergun" />
+
+    <CheckBox
+        android:id="@+id/cb_cuma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="checkBoxCtl"
+        android:text="@string/cuma"
+        app:layout_constraintEnd_toStartOf="@+id/cb_sali"
+        app:layout_constraintStart_toEndOf="@+id/cb_pzt"
+        app:layout_constraintTop_toBottomOf="@+id/cb_pzt" />
+
+    <CheckBox
+        android:id="@+id/cb_cts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="checkBoxCtl"
+        android:text="@string/cts"
+        app:layout_constraintEnd_toEndOf="@+id/cb_crs"
+        app:layout_constraintStart_toStartOf="@+id/cb_sali"
+        app:layout_constraintTop_toBottomOf="@+id/cb_sali" />
+
+    <CheckBox
+        android:id="@+id/cb_pazar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="checkBoxCtl"
+        android:text="@string/pazar"
+        app:layout_constraintEnd_toStartOf="@+id/cb_prs"
+        app:layout_constraintStart_toEndOf="@+id/cb_crs"
+        app:layout_constraintTop_toBottomOf="@+id/cb_crs" />
+
+    <EditText
+        android:id="@+id/editTextN"
+        android:layout_width="180dp"
+        android:layout_height="45dp"
+        android:backgroundTint="#009688"
+        android:ems="10"
+        android:hint="@string/hintN"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:textColorHighlight="@color/colorPrimary"
+        android:textColorLink="@color/colorPrimary"
+        android:textCursorDrawable="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintStart_toStartOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/cb_cts" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:entries="@array/spin"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/cb_cts" />
+
+    <TextView
+        android:id="@+id/currentTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00:00"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textColor="@color/colorPrimary"
+        android:textSize="100sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
