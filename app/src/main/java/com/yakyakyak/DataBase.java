@@ -19,7 +19,6 @@ public class DataBase extends SQLiteOpenHelper {
     private static final String isim = "İSİM";
     private static final String gun = "GÜN";
     private static final String zamanBirimi = "ZAMAN_BİRİMİ";
-    public static String asd="";
 
     public static SQLiteDatabase database;
     public DataBase(Context context) {
@@ -71,7 +70,6 @@ public class DataBase extends SQLiteOpenHelper {
                         + cursor.getString(2)
                         + " - "
                         + cursor.getString(3));
-                //asd = cursor.getString(2) + " - " + cursor.getString(3);
             }
         } catch (Exception e) {
         }

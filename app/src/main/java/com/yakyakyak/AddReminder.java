@@ -18,9 +18,6 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class AddReminder extends AppCompatActivity {
 
     //Widgets defination
@@ -33,7 +30,6 @@ public class AddReminder extends AppCompatActivity {
     public static String zB;
 
     //Variable defination
-    int saniye=0,dakika=0;
     String[] gunler;
     String isim="Hatırlat", timeString;
     @Override
