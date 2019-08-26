@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,9 @@ public class DataBase extends SQLiteOpenHelper {
     private static final String isim = "İSİM";
     private static final String gun = "GÜN";
     private static final String zamanBirimi = "ZAMAN_BİRİMİ";
+    public static String asd="";
 
-
+    public static SQLiteDatabase database;
     public DataBase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -53,8 +55,10 @@ public class DataBase extends SQLiteOpenHelper {
         db.close();
     }
 
+
     public List<String> VeriListele() {
         List<String> veriler = new ArrayList<String>();
+
         SQLiteDatabase db = this.getReadableDatabase();
         try {
             String[] stunlar = {isim, gun, zaman, zamanBirimi};
@@ -67,6 +71,7 @@ public class DataBase extends SQLiteOpenHelper {
                         + cursor.getString(2)
                         + " - "
                         + cursor.getString(3));
+                //asd = cursor.getString(2) + " - " + cursor.getString(3);
             }
         } catch (Exception e) {
         }

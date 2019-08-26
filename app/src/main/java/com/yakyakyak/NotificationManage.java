@@ -14,44 +14,43 @@ import androidx.core.app.NotificationManagerCompat;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.yakyakyak.MyService.period;
+
 public class NotificationManage extends Application {
     private NotificationManagerCompat notificationManager;
     Timer timer;
-    boolean control = false;
     public static final String CHANNEL_1_ID = "channel1";
-    public long period=1000000;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
-        createNotificationChannels();
-        notificationManager = NotificationManagerCompat.from(this);
 
-        timer = new Timer();
-        timer.schedule(new TimerTask() {  //check and sendNotification();
-            @Override
-            public void run() {
-                sendNotification();
-            }
+        if(MyService.alarm){
+            createNotificationChannels();
+            notificationManager = NotificationManagerCompat.from(this);
 
-        }, 0,period);
+            timer = new Timer();
+            timer.schedule(new TimerTask() {  //check and sendNotification();
+                @Override
+                public void run() {
+                    sendNotification();
+                }
+
+            }, 0,period);
+        }
+
     }
 
     private void sendNotification() {
-
-                if(control){
-                    NotificationCompat.Builder notification = new NotificationCompat.Builder(this,CHANNEL_1_ID);
-                    notification.setSmallIcon(R.drawable.ic_launcher_foreground)
-                            .setContentTitle("Title")
-                            .setContentText("Text")
-                            .setPriority(NotificationCompat.PRIORITY_HIGH)
-                            .setCategory(NotificationCompat.CATEGORY_MESSAGE);
-                    notification.setDefaults(Notification.DEFAULT_LIGHTS|Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE|Notification.FLAG_AUTO_CANCEL);
-                    notificationManager.notify(1,notification.build());
-                }
-                else
-                    Toast.makeText(this,"zamani değil",Toast.LENGTH_SHORT);
-
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(this,CHANNEL_1_ID);
+        notification.setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle("Title")
+                .setContentText("Text")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE);
+        notification.setDefaults(Notification.DEFAULT_LIGHTS|Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE|Notification.FLAG_AUTO_CANCEL);
+        notificationManager.notify(1,notification.build());
 
     }
 

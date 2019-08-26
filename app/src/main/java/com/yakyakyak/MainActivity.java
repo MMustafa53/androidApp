@@ -20,12 +20,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.ServiceConfigurationError;
 
 import static com.yakyakyak.NotificationManage.CHANNEL_1_ID;
 
 public class MainActivity extends AppCompatActivity {
 
-    private NotificationManagerCompat notificationManager;
     private final int request_code = 1;
     ListView listView;
     FloatingActionButton fab,del;
@@ -34,7 +34,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        notificationManager = NotificationManagerCompat.from(this);
+
+        Intent serviceStartIntent = new Intent(MainActivity.this,MyService.class);
+        startService(serviceStartIntent);
+
         fab = findViewById(R.id.floatingActionButton);
         del = findViewById(R.id.floatingActionButton2);
         listView = findViewById(R.id.listView);
