@@ -4,37 +4,50 @@ import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.graphics.Bitmap;
+import android.app.Service;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.widget.Button;
+import android.os.IBinder;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.yakyakyak.NotificationManage.CHANNEL_1_ID;
 
+public class NotificationServiceCreate extends Service  {
 
-public class NotificationManage extends Application{
     private NotificationManagerCompat notificationManager;
     private String baslik="Bence biraz mola vermelisin ...";
     private String yazi="Sende yorulmadın mı. Bi araya nedersin";
-    public static boolean kontrol = false;
-    String bugun ="",zamanBirimi,saat,gunler,hat="";
+    public static boolean alarm =false;
+    String bugun ="",zamanBirimi,saat,gunler,hat="",timeStringCtl;
     String[] listItemD,gunlerD,hatlar;
+    long[] periods = new long[50];
     DataBase dataBase;
+    public static long period=1000;
     List<String> list;
-    int k=0,gun;
-    long[] periods;
-    Timer timer;
-    int sure;
-    public static final String CHANNEL_1_ID = "channel1";
-    public long period;
+    int gun, sure, k=0;
+    public boolean kontrol = false;
+    Timer timer, timerCtl;
+
+    public NotificationServiceCreate() {
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        // TODO: Return the communication channel to the service.
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 
     @Override
     public void onCreate() {
@@ -65,7 +78,7 @@ public class NotificationManage extends Application{
                 bugun = getString(R.string.cts);
                 break;
         }
-        dataBase = new DataBase(NotificationManage.this);
+        dataBase = new DataBase(NotificationServiceCreate.this);
         list = dataBase.VeriListele();
         if(list.size() != 0) {
             for (int i = 0; i < list.size(); i++) {
@@ -130,8 +143,40 @@ public class NotificationManage extends Application{
 
             }, 0, period);
         }
+
+        Toast.makeText(this,"Service Oluştu",Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, final int startId){
+        Toast.makeText(this, "Service Başladı", Toast.LENGTH_LONG).show();
+
+
+
+        timerCtl.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                timeStringCtl = SimpleDateFormat.getTimeInstance().format(new Date());
+                SimpleDateFormat sDF = new SimpleDateFormat("HH:mm:ss");
+                try {
+                    Date d1 = sDF.parse(timeStringCtl);
+                    Date d2 = sDF.parse(saat);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        },0,1000);
+        return super.onStartCommand(intent, flags, startId);
+
+    }
+
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(this,"Service Kapatıldı",Toast.LENGTH_SHORT).show();
+    }
 
     public void sendNotification() {
         NotificationCompat.Builder notification = new NotificationCompat.Builder(this,CHANNEL_1_ID);
@@ -157,4 +202,5 @@ public class NotificationManage extends Application{
             manager.createNotificationChannel(channel1);
         }
     }
+
 }

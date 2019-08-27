@@ -50,7 +50,6 @@ public class MyService extends Service {
     public void onCreate() {
         super.onCreate();
 
-
         Toast.makeText(this,"Service Oluştu",Toast.LENGTH_SHORT).show();
     }
 

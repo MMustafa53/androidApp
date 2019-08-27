@@ -13,9 +13,13 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <service
-            android:name=".MyService"
+            android:name=".NotificationServiceCreate"
             android:enabled="true"
             android:exported="true"></service>
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true" />
 
         <activity android:name=".AddReminder" />
         <activity android:name=".MainActivity">
