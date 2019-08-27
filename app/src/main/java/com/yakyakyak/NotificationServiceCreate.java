@@ -22,10 +22,11 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.yakyakyak.NotificationManage.CHANNEL_1_ID;
+
 
 public class NotificationServiceCreate extends Service  {
 
+    public static final String CHANNEL_1_ID = "channel1";
     private NotificationManagerCompat notificationManager;
     private String baslik="Bence biraz mola vermelisin ...";
     private String yazi="Sende yorulmadın mı. Bi araya nedersin";
