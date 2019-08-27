@@ -39,6 +39,7 @@ public class NotificationServiceCreate extends Service  {
     int gun, sure, k=0;
     public boolean kontrol = false;
     Timer timer, timerCtl;
+    Date d1,d2;
 
     public NotificationServiceCreate() {
     }
@@ -159,11 +160,12 @@ public class NotificationServiceCreate extends Service  {
                 timeStringCtl = SimpleDateFormat.getTimeInstance().format(new Date());
                 SimpleDateFormat sDF = new SimpleDateFormat("HH:mm:ss");
                 try {
-                    Date d1 = sDF.parse(timeStringCtl);
-                    Date d2 = sDF.parse(saat);
+                    d1 = sDF.parse(timeStringCtl);
+                    d2 = sDF.parse(saat);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                long fark = d1.getTime()-d2.getTime();
             }
         },0,1000);
         return super.onStartCommand(intent, flags, startId);
