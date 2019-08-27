@@ -36,9 +36,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent serviceStartIntent = new Intent(MainActivity.this,MyService.class);
-        startService(serviceStartIntent);
-
         fab = findViewById(R.id.floatingActionButton);
         del = findViewById(R.id.floatingActionButton2);
         listView = findViewById(R.id.listView);
