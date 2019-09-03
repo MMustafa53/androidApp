@@ -6,7 +6,9 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.renderscript.RenderScript;
@@ -23,7 +25,7 @@ import java.util.Locale;
 import java.util.ServiceConfigurationError;
 
 
-import static com.yakyakyak.NotificationManage.CHANNEL_1_ID;
+import static com.yakyakyak.NotificationServiceCreate.CHANNEL_1_ID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     FloatingActionButton fab,del;
     String ad = "";
+    DataBase dataBase;
+    List<String> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,13 @@ public class MainActivity extends AppCompatActivity {
         listele();
         if(resultCode == RESULT_OK && requestCode==request_code){
             Toast.makeText(this,"Hatırlatıcı oluşturuldu",Toast.LENGTH_SHORT).show();
+            NotificationServiceCreate.kontrol = true;
+            dataBase = new DataBase(MainActivity.this);
+            list = dataBase.VeriListele();
+            if(list.size() != 0) {
+                Intent notificationService = new Intent(MainActivity.this, NotificationServiceCreate.class);
+                startService(notificationService);
+            }
         }
         else {
             Toast.makeText(this,"Hatırlatıcı iptal edildi",Toast.LENGTH_SHORT).show();
@@ -78,7 +89,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void fabClickDell(View view){
-
+        Intent stopService = new Intent(MainActivity.this,NotificationServiceCreate.class);
+        NotificationServiceCreate.kontrol = false;
+        stopService(stopService);
         if(!ad.equals("")){
             Toast.makeText(this,ad+ " hatırlatıcısı silindi",Toast.LENGTH_SHORT).show();
             DataBase dataBase = new DataBase(MainActivity.this);
@@ -88,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         else{
             Toast.makeText(this,"Lütfen silmek istediğiniz hatırlatıcıya tıklayın",Toast.LENGTH_SHORT).show();
         }
+        System.exit(0);
     }
 
     //        BILDIRIM KODU

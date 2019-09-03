@@ -28,17 +28,18 @@ public class NotificationServiceCreate extends Service  {
 
     public static final String CHANNEL_1_ID = "channel1";
     private NotificationManagerCompat notificationManager;
-    private String baslik="Bence biraz mola vermelisin ...";
-    private String yazi="Sende yorulmadın mı. Bi araya nedersin";
+    private String baslik="Mola zamanı";
+    private String yazi="Sence de bi arayı haketmedin mi? Hadi bi mola";
     public static boolean alarm =false;
     String bugun ="",zamanBirimi,saat,gunler,hat="",timeStringCtl;
     String[] listItemD,gunlerD,hatlar;
     long[] periods = new long[50];
     DataBase dataBase;
-    public static long period=1000;
+
+    long period=0;
     List<String> list;
     int gun, sure, k=0;
-    public boolean kontrol = false;
+    public static boolean kontrol = false;
     Timer timer, timerCtl;
     Date d1,d2;
 
@@ -54,6 +55,32 @@ public class NotificationServiceCreate extends Service  {
     @Override
     public void onCreate() {
         super.onCreate();
+
+
+
+        Toast.makeText(this,"Service Oluştu",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, final int startId){
+        Toast.makeText(this, "Service Başladı", Toast.LENGTH_LONG).show();
+
+
+
+//        timerCtl.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                timeStringCtl = SimpleDateFormat.getTimeInstance().format(new Date());
+//                SimpleDateFormat sDF = new SimpleDateFormat("HH:mm:ss");
+//                try {
+//                    d1 = sDF.parse(timeStringCtl);
+//                    d2 = sDF.parse(saat);
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+//                long fark = d1.getTime()-d2.getTime();
+//            }
+//        },0,1000);
 
         Calendar cl = Calendar.getInstance();
         gun = cl.get(Calendar.DAY_OF_WEEK);
@@ -84,6 +111,7 @@ public class NotificationServiceCreate extends Service  {
         list = dataBase.VeriListele();
         if(list.size() != 0) {
             for (int i = 0; i < list.size(); i++) {
+                k=i;
                 listItemD = list.get(i).split(" - ");
                 gunler = listItemD[1];
                 gunlerD = gunler.split(", ");
@@ -94,8 +122,8 @@ public class NotificationServiceCreate extends Service  {
                     while (k == i) {
                         if (bugun.equals(gunlerD[j])) {
                             hat += listItemD[0] + ",";
-                            k++;
                         }
+                        break;
                     }
                 }
                 switch (zamanBirimi) {
@@ -124,6 +152,7 @@ public class NotificationServiceCreate extends Service  {
                         period *= 60 * 60 * 24 * 365 * sure;
                         break;
                 }
+                periods[i]=period;
             }
             if (!hat.equals("")) {
                 hat = hat.substring(0, hat.length() - 1);
@@ -131,44 +160,21 @@ public class NotificationServiceCreate extends Service  {
             }
         }
 
-        if (period != 0) {
-            createNotificationChannels();
-            notificationManager = NotificationManagerCompat.from(this);
+        if(list.size()!=0) {
+            if (period != 0 && !hat.equals("") && kontrol) {
+                createNotificationChannels();
+                notificationManager = NotificationManagerCompat.from(this);
 
-            timer = new Timer();
-            timer.schedule(new TimerTask() {  //check and sendNotification();
-                @Override
-                public void run() {
-                    sendNotification();
-                    kontrol = true;
-                }
+                timer = new Timer();
+                timer.schedule(new TimerTask() {  //check and sendNotification();
+                    @Override
+                    public void run() {
+                        sendNotification();
+                    }
 
-            }, 0, period);
-        }
-
-        Toast.makeText(this,"Service Oluştu",Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, final int startId){
-        Toast.makeText(this, "Service Başladı", Toast.LENGTH_LONG).show();
-
-
-
-        timerCtl.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                timeStringCtl = SimpleDateFormat.getTimeInstance().format(new Date());
-                SimpleDateFormat sDF = new SimpleDateFormat("HH:mm:ss");
-                try {
-                    d1 = sDF.parse(timeStringCtl);
-                    d2 = sDF.parse(saat);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                long fark = d1.getTime()-d2.getTime();
+                }, 0, period);
             }
-        },0,1000);
+        }
         return super.onStartCommand(intent, flags, startId);
 
     }
@@ -179,12 +185,15 @@ public class NotificationServiceCreate extends Service  {
     public void onDestroy() {
         super.onDestroy();
         Toast.makeText(this,"Service Kapatıldı",Toast.LENGTH_SHORT).show();
+        period = 0;
+        kontrol = false;
+        stopSelf();
     }
 
     public void sendNotification() {
         NotificationCompat.Builder notification = new NotificationCompat.Builder(this,CHANNEL_1_ID);
         notification.setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle(baslik)
+                .setContentTitle(hatlar[0]+" Hatırlatıcısı "+ baslik)
                 .setContentText(yazi)
                 .setColor(getColor(R.color.colorPrimary))
                 .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.ic_smoking))
