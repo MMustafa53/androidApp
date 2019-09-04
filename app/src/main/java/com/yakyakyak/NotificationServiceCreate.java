@@ -187,6 +187,7 @@ public class NotificationServiceCreate extends Service  {
         Toast.makeText(this,"Service Kapatıldı",Toast.LENGTH_SHORT).show();
         period = 0;
         kontrol = false;
+        timer.cancel();
         stopSelf();
     }
 

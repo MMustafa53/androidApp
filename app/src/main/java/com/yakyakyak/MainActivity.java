@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
         else{
             Toast.makeText(this,"Lütfen silmek istediğiniz hatırlatıcıya tıklayın",Toast.LENGTH_SHORT).show();
         }
-        System.exit(0);
     }
 
     //        BILDIRIM KODU
