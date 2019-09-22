@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         fab = findViewById(R.id.floatingActionButton);
         del = findViewById(R.id.floatingActionButton2);
         listView = findViewById(R.id.listView);
@@ -75,6 +74,12 @@ public class MainActivity extends AppCompatActivity {
         else {
             Toast.makeText(this,"Hatırlatıcı iptal edildi",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(this,"Destroy edildi", Toast.LENGTH_SHORT).show();
     }
 
     public void listele(){
